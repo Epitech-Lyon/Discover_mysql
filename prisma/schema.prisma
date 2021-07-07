@@ -1,0 +1,40 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["orderByRelation"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DB_URL")
+}
+
+model events {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(45)
+  description String?  @db.Text
+  nb_players  Int
+  price       Int?
+  game        String   @db.VarChar(45)
+  start_date  DateTime @db.Date
+  end_date    DateTime @db.Date
+}
+
+model players {
+  id       Int    @id @default(autoincrement())
+  name     String @db.VarChar(45)
+  event_id Int
+  team_id  Int?
+}
+
+model scores {
+  id        Int @id @default(autoincrement())
+  event_id  Int
+  player_id Int
+  score     Int
+}
+
+model teams {
+  id       Int    @id @default(autoincrement())
+  name     String @db.VarChar(45)
+  event_id Int
+}
